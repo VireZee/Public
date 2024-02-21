@@ -1,0 +1,114 @@
+$dur: 1s;
+.load-container {
+	font-size: calc(20px + (30 - 20) * (100vw - 320px) / (1280 - 320));
+	transition: opacity 1s;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #17181c;
+	color: #e3e4e8;
+	display: grid;
+	place-items: center;
+	z-index: 3;
+	.hexagon {
+		position: relative;
+		.hexagon__group,
+		.hexagon__sector,
+		.hexagon__sector:before,
+		.hexagon__sector:after {
+			position: absolute;
+		}
+		.hexagon__group {
+			width: 100%;
+			height: 100%;
+		}
+		@for $i from 2 through 6 {
+			.hexagon__group:nth-child(#{$i}) {
+				$delay: calc(#{$dur} * (-#{$i - 1}/6));
+				.hexagon__sector,
+				.hexagon__sector:before,
+				.hexagon__sector:after {
+					animation-delay: $delay;
+				}
+			}
+		}
+		.hexagon__group:nth-child(odd) {
+			transform: rotate(30deg);
+		}
+		.hexagon__sector,
+		.hexagon__sector:before,
+		.hexagon__sector:after {
+			animation-duration: $dur;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear;
+			width: .2em;
+			height: .2em;
+		}
+		.hexagon__sector {
+			animation-name: moveOut;
+			top: calc(50% - .1em);
+			left: calc(50% - .1em);
+			@keyframes moveOut {
+				from {
+					transform: translateY(0) scale(0);
+				}
+				3% {
+					transform: translateY(.2em) scale(1);
+				}
+				97% {
+					transform: translateY(7.3em) scale(1);
+				}
+				to {
+					transform: translateY(7.5em) scale(0);
+				}
+			}
+		}
+		@for $i from 2 through 6 {
+			.hexagon__sector:nth-child(#{$i}) {
+				animation-name: moveOut#{$i};
+				@for $i from 2 through 6 {
+					$degree: ($i - 1) * 60deg;
+					@keyframes moveOut#{$i} {
+						from {
+							transform: rotate($degree) translateY(0) scale(0);
+						}
+						3% {
+							transform: rotate($degree) translateY(.2em) scale(1);
+						}
+						97% {
+							transform: rotate($degree) translateY(7.3em) scale(1);
+						}
+						to {
+							transform: rotate($degree) translateY(7.5em) scale(0);
+						}
+					}
+				}
+			}
+		}
+		.hexagon__sector:before,
+		.hexagon__sector:after {
+			animation-name: ripple;
+			background-color: currentColor;
+			border-radius: .1em;
+			content: "";
+			display: block;
+			top: 0;
+			transform-origin: .1em .1em;
+			@keyframes ripple {
+				from, to {
+					width: .2em;
+				}
+				33% {
+					width: 2.4em;
+				}
+			}
+		}
+		.hexagon__sector:before {
+			transform: rotate(-30deg)
+		}
+		.hexagon__sector:after {
+			transform: rotate(-150deg)
+		}
+	}
+}

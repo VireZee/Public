@@ -1,0 +1,47 @@
+.abt-container {
+    position: relative;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+    @media (max-height: 600px) {
+        height: 600px;
+    }
+    .three {
+        height: 100%;
+        animation: appear 5s;
+        animation-fill-mode: forwards;
+        animation-play-state: paused;
+        @keyframes appear {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    }
+    h1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75%;
+        text-align: center;
+        visibility: hidden;
+        span {
+            visibility: hidden;
+            font-size: xx-large;
+            font-weight: 100;
+            font-family: "Montserrat";
+            @font-face {
+                font-family: "Montserrat";
+                src: url("./fonts/Montserrat.ttf") format("truetype");
+            }
+            @media (max-width: 700px) {
+                font-size: .9em;
+            }
+        }
+    }
+}
